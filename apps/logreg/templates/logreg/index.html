@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Registration Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <style>
+
+      .container>h2{
+        width : 980px;
+        padding : 40px;
+        text-align: center;
+        border: 1px solid black;
+        background: lightblue;
+
+      }
+      ul{
+        list-style: None;
+      }
+      .error1{
+        color: green;
+      }
+      .error2{
+        color : red;
+      }
+      .left-block,.right-block{
+        display: inline-block;
+        vertical-align: top;
+        width: 45%;
+        margin-top: 40px;
+
+      }
+      .right-block{
+          margin-left: 5%;
+      }
+      .classred{
+        color : red;
+        font-size: 0.75em;
+        font-weight: 100;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Login and Registration</h2>
+
+      <div class="left-block">
+        <h4>Register here!</h4>
+        <!-- <button class="btn btn-primary" type="button" name="regbut">Register</button> -->
+        <form id= "regform" action="/regProcess" method='POST'>
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" value="">
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'firstname' in message.tags %}
+                <span class= "classred" > {{ message }}</span>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" value="">
+          {% if messages %}
+          {% for message in messages %}
+            {% if 'lastname' in message.tags %}
+              <span class="classred">{{ message }}</span>
+            {% endif %}
+          {% endfor %}
+          {% endif %}
+          </div>
+
+
+
+          <div class="form-group">
+            <label for="Email1">Email address</label>
+            <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" name="email" value="">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            {% if messages %}
+            {% for message in messages %}
+              {% if 'email' in message.tags %}
+                <span class="classred">{{ message }}</span>
+              {% endif %}
+            {% endfor %}
+            {% endif %}
+          </div>
+
+
+          <div class="form-group">
+            <label for="Password1">Password</label>
+            <input type="password" class="form-control" id="Password1" name="pwd" >
+            {% if messages %}
+            {% for message in messages %}
+              {% if 'pwd' in message.tags %}
+                <span class="classred">{{ message }}</span>
+              {% endif %}
+            {% endfor %}
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="confPassword1">Confirm Password</label>
+            <input type="password" class="form-control" id="confPassword1" name="confpwd">
+            {% if messages %}
+            {% for message in messages %}
+              {% if 'confpwd' in message.tags %}
+                <span class="classred">{{ message }}</span>
+              {% endif %}
+            {% endfor %}
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+      </div>
+
+      <div class="right-block">
+        <h4>Login Here!</h4>
+        {% if messages %}
+          {% for message in messages %}
+            {% if 'login' in message.tags %}
+              <span class= "classred" > {{ message }}</span>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        <form id="logform"  action="/valLogin" method='POST'>
+          {% csrf_token %}
+          <div class="form-group">
+            <small id="emailHelp" class="form-text text-muted">{{message}}</small>
+            <label for="Email1">Email address</label>
+            <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" name="email" value="">
+          </div>
+          <div class="form-group">
+            <label for="Password1">Password</label>
+            <input type="password" class="form-control" id="Password1" name="loginpwd" >
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>
